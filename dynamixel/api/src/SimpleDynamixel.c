@@ -69,12 +69,12 @@ void PrintErrorCode()
 void moveTo(int ID, int degree)
 {
   int CommStatus;
- 
+
       int result = (int) (511.5 - (degree * (511.5 / 150)));
       printf("Going to : %d\n", result);
-      
+
       dxl_write_word( ID, 30, result);
-	
+
       CommStatus = dxl_get_result();
 
       if( CommStatus == COMM_RXSUCCESS )
@@ -93,17 +93,11 @@ void moveTo(int ID, int degree)
 void moveToWithSpeed(int ID, int degree, int speed)
 {
   int CommStatus;
-
   dxl_write_word( ID, 32, (int) ((1023 * speed) / 100));
-  
-      
   int result = (int) (511.5 - (degree * (511.5 / 150)));
   printf("Going to : %d\n", result);
-      
   dxl_write_word( ID, 30, result);
-	
   CommStatus = dxl_get_result();
-
   if( CommStatus == COMM_RXSUCCESS )
     {
       PrintErrorCode();
@@ -118,73 +112,52 @@ void moveToWithSpeed(int ID, int degree, int speed)
 
 int openDevice()
 {
-
   int baudnum = 1;
   int deviceIndex = 0;
-  
   if( dxl_initialize(deviceIndex, baudnum) == 0 )
     {
-      
       printf( "Failed to open USB2Dynamixel!\n" );
-      
       return 0;
-      
     }
   else
     {
-      
       printf( "Succeed to open USB2Dynamixel!\n" );
-
       return 1;
-      
     }
-  
 }
 
 
 void closeDevice()
 {
-
   printf( "Device closed!\n" );
   dxl_terminate();
-
 }
 
 
 int isMoving(int ID)
 {
-
   return (dxl_read_byte(ID, 46));
-
 }
 
 
 int getPosition(int ID)
 {
-  
   int currentPosition =  dxl_read_word(ID, 36);
-
   return (int) ((511.5 - currentPosition) / (511.5 / 150));
-  
 }
 
 int getSpeed(int ID)
 {
-
   int currentSpeed = dxl_read_word(ID, 38);
-
   return (int) ((currentSpeed * 100) / 1023);
-
 }
 
 void setEndLessOn(int ID, int speed)
 {
-
   int CommStatus;
 
   dxl_write_word(ID, 6, 0);
   dxl_write_word(ID, 8, 0);
-  
   CommStatus = dxl_get_result();
 
   if( CommStatus == COMM_RXSUCCESS )
@@ -198,12 +171,10 @@ void setEndLessOn(int ID, int speed)
     }
 
   setSpeed(ID, speed);
-
 }
 
 void setSpeed(int ID, int speed)
 {
-
   int CommStatus;
 
   dxl_write_word( ID, 32, (int) ((1023 * speed) / 100));
@@ -216,23 +187,17 @@ void setSpeed(int ID, int speed)
     }
   else
     {
-
       PrintCommStatus(CommStatus);
       return;
     }
-
 }
-
-
 
 void setEndLessOff(int ID)
 {
-
   int CommStatus;
 
   dxl_write_word(ID, 8, 255);
   //dxl_write_word(ID, 6, 0);
-  
   CommStatus = dxl_get_result();
 
   if( CommStatus == COMM_RXSUCCESS )
@@ -244,25 +209,19 @@ void setEndLessOff(int ID)
       PrintCommStatus(CommStatus);
       return;
     }
-
 }
 
 void reset(int ID)
 {
-
   dxl_reset(ID);
-
   //setId(1, ID);
-
 }
 
 void setId(int ID, int newId)
 {
-  
   int CommStatus;
 
   dxl_write_word(ID, 3, newId);
-  
   CommStatus = dxl_get_result();
 
   if( CommStatus == COMM_RXSUCCESS )
@@ -274,5 +233,4 @@ void setId(int ID, int newId)
       PrintCommStatus(CommStatus);
       return;
     }
-
 }

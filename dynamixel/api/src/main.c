@@ -1,5 +1,10 @@
-int main() {
+#include "SimpleDynamixel.h"
 
-	printf("toto\n");
-	return 0;
+int main() {
+  openDevice();
+  int i;
+  for(i = 0; i < 100; i++) {
+    reset(i);
+  }
+  return 0;
 }
