@@ -1,5 +1,26 @@
+# Client Leap Motion RPi
 from BrickPi import *
 import socket
+import pypot.dynamixel
+import itertools
+
+# init dynamixel
+def init_dynamixel():
+    ports = pypot.dynamixel.get_available_ports()
+    if not ports:
+        raise IOError('no port found!')
+    print('ports found', ports)
+    print('connecting on the first available port:', ports[0])
+    dxl_io = pypot.dynamixel.DxlIO(ports[0])
+    ids = dxl_io.scan()
+    models = dxl_io.get_model(ids)
+    positions = dict(zip(ids, dxl_io.get_present_position(ids)))
+    print positions
+    ################################################
+    dxl_io.enable_torque(ids)
+    speed = dict(zip(ids, itertools.repeat(200)))
+    dxl_io.set_moving_speed(speed)
+
 
 BrickPiSetup()
 
@@ -32,6 +53,9 @@ try:
                 print 'b'
                 BrickPi.MotorSpeed[PORT_A] = -200
                 BrickPi.MotorSpeed[PORT_D] = -200
+            elif r == 'ok':
+                print 'move the arm'
+                # TODO move the dynamixel here
             else:
                 BrickPi.MotorSpeed[PORT_A] = 0
                 BrickPi.MotorSpeed[PORT_D] = 0

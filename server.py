@@ -1,4 +1,6 @@
-import Leap, sys, socket
+import sys
+sys.path.insert(0, "./lib")
+import Leap, socket
 
 class Server(object):
     def __init__(self):
@@ -63,6 +65,8 @@ class MyListener(Server, Leap.Listener):
             direction = self.find_direction(hand.palm_position)
             print str(direction)
             self.send(str(direction) + '\n')
+        if hand.is_valid and len(fingers) == 2:
+            seld.send('ok');
 
     def __del__(self):
         self.controller.remove_listener(self)
