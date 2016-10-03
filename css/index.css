@@ -1,0 +1,41 @@
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    background: #225088 !important;
+    color: white !important;
+}
+.car {
+    max-height: 100%;
+    width: auto;
+    padding: 20%;
+}
+.h100 {
+    height: 100%;
+}
+
+.textAl {
+    text-align: center;
+}
+
+.desc {
+    font-size: 23px;
+    text-align: justify;
+    margin-top: 5%;
+    padding: 0 90px;
+}
+
+.modal-title {
+    font-size: 44px;
+}
+.disptable {
+    display: table;
+}
+
+
+.cell {
+    display: table-cell;
+    vertical-align: middle;
+}
