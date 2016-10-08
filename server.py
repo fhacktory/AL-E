@@ -65,8 +65,8 @@ class MyListener(Server, Leap.Listener):
             direction = self.find_direction(hand.palm_position)
             print str(direction)
             self.send(str(direction) + '\n')
-        if hand.is_valid and len(fingers) == 2:
-            seld.send('ok');
+        if len(fingers) == 2:
+            self.send('ok');
 
     def __del__(self):
         self.controller.remove_listener(self)
